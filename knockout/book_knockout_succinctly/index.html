@@ -21,6 +21,7 @@
                 <th>Price</th>
                 <th>Tag</th>
                 <th>Act</th>
+                <th>Discount</th>
             </tr>
         </thead>
         <tbody data-bind="foreach: shoppingCart">
@@ -29,10 +30,16 @@
                 <td data-bind="text: price"></td>
                 <td>
                     <ul data-bind="foreach: tags">
-                        <li data-bind="text: $data"></li>
+                        <li>
+                            Tag:<span data-bind="text: $data"></span>
+                        </li>
+                        <li>
+                            Category: <span data-bind="text: $parent.name"></span>
+                        </li>
                     </ul>
                 </td>
                 <td><button data-bind="click: $root.removeProduct">--</button></td>
+                <td data-bind="if: discount() > 0" style="color: red;"><span data-bind="text: formatedDiscount"></span></td>
             </tr>
         </tbody>
     </table>
