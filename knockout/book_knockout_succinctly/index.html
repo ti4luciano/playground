@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <h1>Opa</h1>
+    <p data-bind="with: featuredProduct">Do you need <strong data-bind="text: name"></strong>? <br /> Get one now for only <strong data-bind="text: price"></strong></p>
     <p><span data-bind="text: firstName"></span>'s test</p>
     <p><span data-bind="text: fullName"></span>'s test</p>
     <button data-bind="click: addProduct">ADD</button>
