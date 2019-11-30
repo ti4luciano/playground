@@ -19,7 +19,6 @@ function PersonViewModel() {
     this.lastName = ko.observable("Alves");
     this.fullName = ko.computed(function() {
         return this.firstName() + " " + this.lastName();
-
     }, this);
 
     var featured = new Product("Cup", 3.99, ["Porcelan", "Whit support"], .2);
