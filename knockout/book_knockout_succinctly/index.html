@@ -11,10 +11,9 @@
 <body>
     <h1>Interactive bindigs</h1>
     <form action="#" method="POST">
-        <!--The value bind-->
+        <!--The value, event, visible, enable binds-->
         <p data-bind="event: {mouseover: showDetails, mouseout: hideDetails}">First Name: <input data-bind="value: firstName" /></p>
-        <p>Last Name: <input data-bind="value: lastName" /><span data-bind="visible: details">Your given name</span></span>
-        </p>
+        <p>Last Name: <input data-bind="value: lastName" /><span data-bind="visible: details">Your given name</span></p>
         <p>Primary phone: <input data-bind="value: primaryPhone" /></p>
         <p>Secoundary phone: <input data-bind="value: secoundaryPhone, enable: primaryPhone().length > 3" /></p>
         <!---->
@@ -23,6 +22,23 @@
         <p><button data-bind="click: displayName">Display name</button></p>
         <p><button data-bind="click: setName">Set name</button></p>
         <!---->
+        <p>Annoy me with special offers: <input data-bind="checked: annoyMe" type="checkbox" /></p>
+        <div data-bind="visible: annoyMe">
+            <div>
+                <input data-bind='checked: annoyTimes' value='morning' type='checkbox' /> In the morning
+            </div>
+            <div>
+                <input data-bind='checked: annoyTimes' value='afternoon' type='checkbox' /> In the afternoon
+            </div>
+            <div>
+                <input data-bind='checked: annoyTimes' value='evening' type='checkbox' /> In the evening
+            </div>
+        </div>
+        <input data-bind="checked: annoyTimesToSelect" value="morning" type="radio" name="annoyGroup" />
+        <div data-bind='visible: annoyMe'>
+            <select data-bind='options: annoyTimes, value:selectedTime'></select>
+        </div>
+        <select data-bind='options: products, optionsText: "name", selectedOptions: favoriteProduct'></select>
     </form>
     <script type="text/javascript" src="knockout-3.5.1.js"></script>
     <script type="text/javascript">
@@ -54,6 +70,27 @@
             this.details = ko.observable(false);
             this.primaryPhone = ko.observable("");
             this.secoundaryPhone = ko.observable("");
+            this.annoyMe = ko.observable(true);
+            this.annoyTimes = ko.observableArray(['morning', 'evening']);
+            this.annoyTimesToSelect = ko.observable("morning");
+            this.selectedTime = ko.observable("evening");
+            var bearZero = {
+                name: "bearFavorite",
+                price: 0.5
+            };
+            this.products = ko.observableArray([{
+                    name: "bearOne",
+                    price: 10.9
+                }, {
+                    name: "bearTwo",
+                    price: 11.9
+                },
+                bearZero, {
+                    name: "bearThree",
+                    price: 12.9
+                }
+            ]);
+            this.favoriteProduct = ko.observableArray([bearZero]);
         };
         ko.applyBindings(new personViewModel());
     </script>
