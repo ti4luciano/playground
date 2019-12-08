@@ -1,4 +1,4 @@
-function Product(name, price, tags, discount) {
+function Product(name, price, tags, discount, permalink) {
     this.name = ko.observable(name);
     this.price = ko.observable(price);
     tags = typeof(tags) !== 'undefined' ? tags : [];
@@ -11,6 +11,8 @@ function Product(name, price, tags, discount) {
         return (this.discount() * 100) + "%";
     }, this);
 
+    this.permalink = permalink;
+
 };
 
 function PersonViewModel() {
@@ -21,7 +23,7 @@ function PersonViewModel() {
         return this.firstName() + " " + this.lastName();
     }, this);
 
-    var featured = new Product("Cup", 3.99, ["Porcelan", "Whit support"], .2);
+    var featured = new Product("Cup", 3.99, ["Porcelan", "Whit support"], .2, "http://www.google.com");
     this.featuredProduct = ko.observable(featured);
 
     this.shoppingCart = ko.observableArray([

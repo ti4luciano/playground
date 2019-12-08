@@ -11,6 +11,7 @@
 
 <body>
     <p data-bind="with: featuredProduct">Do you need <strong data-bind="text: name"></strong>? <br /> Get one now for only <strong data-bind="text: price"></strong></p>
+    <p><a data-bind='attr: {href:featuredProduct().permalink}'>View details</a></p>
     <p><span data-bind="text: firstName"></span>'s test</p>
     <p><span data-bind="text: fullName"></span>'s test</p>
     <button data-bind="click: addProduct">ADD</button>
