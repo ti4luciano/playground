@@ -30,8 +30,8 @@ function PersonViewModel() {
         new Product("Car", 20, ['fast', 'furious'], -.3)
     ]);
     this.addProduct = function() {
-        var order = this.shoppingCart().length;
-        this.shoppingCart.push(new Product("New Prod", Date(), [1, 2, 3], order));
+        var orderCount = this.shoppingCart().length;
+        this.shoppingCart.push(new Product("New Prod", Date(), [1, 2, 3], orderCount));
     };
 
     this.removeProduct = function(product) {
