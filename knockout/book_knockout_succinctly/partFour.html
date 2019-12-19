@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles.css">
+    <title>Chapter 8 Animations</title>
+</head>
+
+<body>
+    <h1>Animations with KO</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: {data: items, beforeRemove: hideProduct, afterAdd: showProduct}">
+            <tr>
+                <td data-bind="text: name"></td>
+                <td data-bind="text: price"></td>
+                <td>
+                    <button data-bind="click: $root.removeProduct">Remove</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button data-bind="click: addProduct">Add Beer</button>
+    <div>
+        <p>
+            <input data-bind="checked: hasInstructions" type="checkbox"> Requires special handling instructions
+        </p>
+        <div>
+            <textarea data-bind="visibleFade: hasInstructions, value: instructions" cols="30" rows="10"></textarea>
+        </div>
+    </div>
+    <script type="text/javascript" src="knockout-3.5.1.js"></script>
+    <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+        function Product(name, price, tags, discount, details) {
+            this.name = ko.observable(name);
+            this.price = ko.observable(price);
+        }
+
+        function ShoppingCart() {
+            var self = this;
+
+            self.instructions = ko.observable("");
+            self.hasInstructions = ko.observable("");
+            self.items = ko.observableArray([
+                new Product("Beer", 10.99),
+                new Product("Brat", 11.99),
+                new Product("Bruns", 12.99)
+            ]);
+            this.showProduct = function(element) {
+                if (element.nodeType === 1) {
+                    $(element).hide().fadeIn();
+                }
+            };
+            this.hideProduct = function(element) {
+                console.log("=> " + element);
+                if (element.nodeType === 1) {
+                    $(element).fadeOut(function() {
+                        $(element).remove();
+                    });
+                }
+
+            };
+            this.addProduct = function() {
+                this.items.push(new Product("New Beer", 11.11));
+            };
+            this.removeProduct = function(product) {
+                self.items.remove(product);
+
+            };
+        };
+        ko.bindingHandlers.visibleFade = {
+            init: function(element, valueAccessor) {
+                var value = valueAccessor();
+                $(element).toggle(value());
+            },
+            update: function(element, valueAccessor) {
+                var value = valueAccessor();
+                value() ? $(element).fadeIn() : $(element).fadeOut();
+            }
+        }
+        ko.applyBindings(new ShoppingCart());
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles.css" />
+    <title>External Data</title>
+</head>
+
+<body>
+    <h1>External Data</h1>
+    <form action="#" method="POST">
+        Insert Zip code:
+        <p>Zip Code: <input data-bind="value: zipCode" /></p>
+        <div>
+            <p>City: <span data-bind="text: city"></span></p>
+            <p>District: <span data-bind="text: district"></span></p>
+        </div>
+        <p><button data-bind="click: loadUserData">Load Data</button></p>
+        <p><button data-bind="click: saveData">Save Data</button></p>
+    </form>
+    <script type="text/javascript" src="knockout-3.5.1.js"></script>
+    <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+        function personViewModel() {
+            var self = this;
+            self.zipCode = ko.observable("60510175");
+            self.city = ko.observable("");
+            self.district = ko.observable("");
+            var url = "https://viacep.com.br/ws/" + self.zipCode() + "/json/";
+
+            self.loadUserData = function() {
+                $.getJSON(url, function(data) {
+                    self.city(data.localidade);
+                    self.district(data.bairro);
+                });
+            }
+            self.saveData = function() {
+                var data_to_send = {
+                    cityData: ko.toJSON(self)
+                };
+                $.post("/save_data", data_to_send, function(data) {
+                    alert("The data has been saved");
+                });
+            }
+        }
+        ko.applyBindings(new personViewModel());
+    </script>
+</body>
+
+</html>
