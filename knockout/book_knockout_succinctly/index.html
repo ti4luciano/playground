@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
@@ -40,8 +40,13 @@
         </div>
         <select data-bind='options: products, optionsText: "name", selectedOptions: favoriteProduct'></select>
     </form>
+    <input type="date" data-date="" data-date-format="dd/mm/yyyy" value="2015-08-09">
     <script type="text/javascript" src="knockout-3.5.1.js"></script>
     <script type="text/javascript">
+        function personViewModel() {
+            var self = this;
+          
+        }
         this.saveUserData = function(model, event) {
             let fullName = model.firstName() + " " + model.lastName();
             alert(fullName + " is trying to checkout!");

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Select Test</title>
+</head>
+
+<body>
+    <h1>Select Test</h1>
+    <form action="#" method="POST">
+        <select data-bind='
+            options: products, 
+            optionsText: "name", 
+            value: prodSelected,
+            optionsCaption: "Choose...",
+            selectedOptions: favoriteProduct
+            '>
+        </select>
+    </form>
+    <span data-bind="text: prodSelected().price"></span>
+    <span data-bind="text: favoriteProduct()[0].name"></span>
+    <script type="text/javascript" src="knockout-3.5.1.js"></script>
+    <script type="text/javascript">
+        function personViewModel() {
+            var bearZero = {name: "bearZero", price: 0.6};
+            var bearOne = {name: "bearOne", price: 1};
+            var bearTwo = {name: "bearTwo", price: 2};
+            var bearThree = {name: "bearThree", price: 3};
+            var bearFour = {name: "bearFour", price: 4};
+            var bearFive = {name: "bearFive", price: 5};
+            prodSelected = ko.observable();
+            products = ko.observableArray([bearZero, bearOne, bearTwo, bearThree, bearFour]);
+            favoriteProduct = ko.observableArray([bearThree]);
+        };
+        ko.applyBindings(new personViewModel());
+    </script>
+</body>
+
+</html>
